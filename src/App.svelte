@@ -5,17 +5,19 @@
 	  ['', '', ''],
 	];
 	let currentPlayer = 'X';
+	let message = 'Player X\'s turn';
   
 	function handleClick(row: number, col: number) {
 	  if (board[row][col] === '') {
 		board[row][col] = currentPlayer;
   
 		if (checkWin()) {
-		  alert(`${currentPlayer} wins!`);
+		  message = `${currentPlayer} wins!`;
 		} else if (checkDraw()) {
-		  alert('It\'s a draw!');
+		  message = 'It\'s a draw!';
 		} else {
 		  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+		  message = `Player ${currentPlayer}'s turn`;
 		}
 	  }
 	}
@@ -61,6 +63,7 @@
 </script>
 
 <div class="main">
+	<h1>{message}</h1>
 	<div class="board">
 		{#each board as row, i}
 		  <div class="boardrow">
@@ -78,29 +81,40 @@
 
 <style>
 	.main {
-		
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	h1 {
+		margin-bottom: 20px;
 	}
 
 	.board {
 		display: flex;
 		flex-direction: column;
-		/* grid-template-columns: repeat(3, 1fr); */
-		/* gap: 10px; */
 	}
 	.boardrow {
-		margin: 0;
 		display: flex;
-		flex-direction: row;
-		width: 300px;
 	}
 	.btns {
-		margin: 10px;
-		width: 30px;
-		height: 30px;
+		
 	}
 	.cell {
-	  border: 1px solid black;
-	  text-align: center;
-	  font-size: 24px;
+		border: 2px solid black;
+		text-align: center;
+		font-size: 24px;
+		width: 100px;
+		height: 100px;
+		background-color: #f0f0f0;
+		cursor: pointer;
+		transition: background-color 0.3s;
+	}
+	.cell:hover {
+		background-color: #ddd;
+	}
+	.cell:disabled {
+		background-color: #bbb;
+		cursor: not-allowed;
 	}
 </style>
